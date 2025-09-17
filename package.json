@@ -1,0 +1,23 @@
+{
+  "name": "f1-meme-machines-simulator",
+  "version": "1.0.0",
+  "description": "Simulador de arrancada de F1 con semáforos y cronómetro",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "build": "echo 'No build step required for static site'"
+  },
+  "keywords": [
+    "f1",
+    "formula1",
+    "simulator",
+    "racing",
+    "timer",
+    "traffic-lights"
+  ],
+  "author": "F1 Meme Machines",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.1"
+  }
+}

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Meme Machines - Simulador de Arrancada</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Logo F1 Izquierdo -->
+    <div class="logo-left">
+        <svg viewBox="0 0 100 40" class="f1-logo">
+            <path d="M10 5 L90 5 L85 15 L15 15 Z" fill="white" opacity="0.9"/>
+            <path d="M15 15 L85 15 L80 25 L20 25 Z" fill="white" opacity="0.7"/>
+            <path d="M20 25 L80 25 L75 35 L25 35 Z" fill="white" opacity="0.5"/>
+            <circle cx="25" cy="20" r="3" fill="white" opacity="0.8"/>
+            <circle cx="75" cy="20" r="3" fill="white" opacity="0.8"/>
+            <path d="M30 8 L35 8 L35 12 L30 12 Z" fill="white" opacity="0.9"/>
+            <path d="M65 8 L70 8 L70 12 L65 12 Z" fill="white" opacity="0.9"/>
+        </svg>
+    </div>
+
+    <!-- Logo F1 Derecho -->
+    <div class="logo-right">
+        <svg viewBox="0 0 100 40" class="f1-logo">
+            <path d="M10 5 L90 5 L85 15 L15 15 Z" fill="white" opacity="0.9"/>
+            <path d="M15 15 L85 15 L80 25 L20 25 Z" fill="white" opacity="0.7"/>
+            <path d="M20 25 L80 25 L75 35 L25 35 Z" fill="white" opacity="0.5"/>
+            <circle cx="25" cy="20" r="3" fill="white" opacity="0.8"/>
+            <circle cx="75" cy="20" r="3" fill="white" opacity="0.8"/>
+            <path d="M30 8 L35 8 L35 12 L30 12 Z" fill="white" opacity="0.9"/>
+            <path d="M65 8 L70 8 L70 12 L65 12 Z" fill="white" opacity="0.9"/>
+        </svg>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1 class="title">F1 Meme Machines</h1>
+            <p class="subtitle">Simulador de Arrancada</p>
+        </header>
+
+        <div class="participant-section">
+            <div class="input-group">
+                <label for="participantName">Nombre del Participante:</label>
+                <input type="text" id="participantName" placeholder="Ingresa tu nombre o alias" maxlength="20">
+            </div>
+        </div>
+
+        <div class="traffic-lights-container">
+            <div class="traffic-light" id="light1">
+                <div class="light red"></div>
+                <div class="light red"></div>
+                <div class="light red"></div>
+                <div class="light red"></div>
+            </div>
+            <div class="traffic-light" id="light2">
+                <div class="light red"></div>
+                <div class="light red"></div>
+                <div class="light red"></div>
+                <div class="light red"></div>
+            </div>
+            <div class="traffic-light" id="light3">
+                <div class="light red"></div>
+                <div class="light red"></div>
+                <div class="light red"></div>
+                <div class="light red"></div>
+            </div>
+            <div class="traffic-light" id="light4">
+                <div class="light red"></div>
+                <div class="light red"></div>
+                <div class="light red"></div>
+                <div class="light red"></div>
+            </div>
+            <div class="traffic-light" id="light5">
+                <div class="light red"></div>
+                <div class="light red"></div>
+                <div class="light red"></div>
+                <div class="light red"></div>
+            </div>
+        </div>
+
+        <div class="timer-section">
+            <div class="timer-display" id="timer">00:00:000</div>
+            <div class="timer-status" id="timerStatus">Esperando...</div>
+        </div>
+
+        <div class="controls">
+            <button id="startButton" class="btn start-btn">¡ARRANCA!</button>
+            <button id="resetButton" class="btn reset-btn">Reiniciar</button>
+        </div>
+
+        <!-- Promoción de Facebook -->
+        <div class="facebook-promotion">
+            <p class="promotion-text">📱 Síguenos en Facebook: <span class="facebook-link">F1 Meme Machines</span></p>
+        </div>
+
+        <div class="history-section">
+            <h3>Historial de Tiempos</h3>
+            <div class="history-list" id="historyList">
+                <p class="no-history">No hay tiempos registrados aún</p>
+            </div>
+            <button id="adminLogin" class="btn admin-btn">🔐 Admin</button>
+            <button id="clearHistory" class="btn clear-btn" style="display: none;">Limpiar Historial</button>
+        </div>
+    </div>
+
+    <!-- Modal de Autenticación de Admin -->
+    <div id="adminModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>🔐 Acceso de Administrador</h3>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Ingresa la contraseña de administrador:</p>
+                <input type="password" id="adminPassword" placeholder="Contraseña" maxlength="20">
+                <div class="modal-buttons">
+                    <button id="loginBtn" class="btn login-btn">Ingresar</button>
+                    <button id="cancelBtn" class="btn cancel-btn">Cancelar</button>
+                </div>
+                <div id="loginError" class="error-message" style="display: none;">
+                    ❌ Contraseña incorrecta
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
