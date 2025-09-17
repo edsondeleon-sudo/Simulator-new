@@ -19,6 +19,11 @@ class F1Simulator {
         this.initializeElements();
         this.initializeEventListeners();
         this.loadHistory();
+        
+        // Recargar datos cada 5 segundos para sincronización
+        setInterval(() => {
+            this.loadDataFromCloud();
+        }, 5000);
     }
 
     initializeElements() {
@@ -326,7 +331,9 @@ class F1Simulator {
         try {
             const response = await fetch(`https://api.jsonbin.io/v3/b/${this.jsonBinId}/latest`, {
                 headers: {
-                    'X-Master-Key': this.jsonBinApiKey
+                    'X-Master-Key': this.jsonBinApiKey,
+                    'Cache-Control': 'no-cache',
+                    'Pragma': 'no-cache'
                 }
             });
             
@@ -334,6 +341,7 @@ class F1Simulator {
                 const data = await response.json();
                 this.history = data.record.history || [];
                 this.penalties = data.record.penalties || [];
+                console.log('Datos cargados desde la nube:', { history: this.history.length, penalties: this.penalties.length });
             } else {
                 console.log('No hay datos en la nube, usando datos locales');
                 this.history = JSON.parse(localStorage.getItem('f1History')) || [];
@@ -350,9 +358,27 @@ class F1Simulator {
 
     async saveDataToCloud() {
         try {
-            const data = {
-                history: this.history,
-                penalties: this.penalties,
+            // Primero cargar datos existentes para no sobrescribir
+            const existingResponse = await fetch(`https://api.jsonbin.io/v3/b/${this.jsonBinId}/latest`, {
+                headers: {
+                    'X-Master-Key': this.jsonBinApiKey
+                }
+            });
+            
+            let existingData = { history: [], penalties: [] };
+            if (existingResponse.ok) {
+                const existing = await existingResponse.json();
+                existingData = existing.record;
+            }
+            
+            // Combinar datos existentes con los nuevos
+            const combinedData = {
+                history: [...existingData.history, ...this.history.filter(newItem => 
+                    !existingData.history.some(existingItem => existingItem.id === newItem.id)
+                )],
+                penalties: [...existingData.penalties, ...this.penalties.filter(newItem => 
+                    !existingData.penalties.some(existingItem => existingItem.id === newItem.id)
+                )],
                 lastUpdated: new Date().toISOString()
             };
 
@@ -362,11 +388,14 @@ class F1Simulator {
                     'Content-Type': 'application/json',
                     'X-Master-Key': this.jsonBinApiKey
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify(combinedData)
             });
 
             if (response.ok) {
                 console.log('Datos guardados en la nube exitosamente');
+                // Actualizar datos locales con los combinados
+                this.history = combinedData.history;
+                this.penalties = combinedData.penalties;
             } else {
                 console.log('Error guardando en la nube, guardando localmente');
                 localStorage.setItem('f1History', JSON.stringify(this.history));
