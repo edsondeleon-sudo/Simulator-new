@@ -1,6 +1,7 @@
 {
   "version": 2,
   "name": "f1-meme-machines-simulator",
+  "outputDirectory": ".",
   "rewrites": [
     {
       "source": "/(.*)",
